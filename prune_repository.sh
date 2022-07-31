@@ -1,5 +1,23 @@
 #! /usr/bin/bash
-BACKUPDIR="backup/$(date -Idate)"
+BACKUPDIR="./backup/$(date -Idate)"
+
+if [ -d "$BACKUPDIR" ]; then
+    echo
+    echo "Output directory \"$BACKUPDIR\" already exists."
+    echo
+
+    exit 1
+fi
+
+if [ -n "$(git status --porcelain)" ]; then
+    echo
+    echo "Found uncommitted changes."
+    echo
+
+    exit 1
+    echo "there are changes";
+fi
+
 mkdir -p "$BACKUPDIR"
 
 git pull
